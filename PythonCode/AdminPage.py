@@ -3,13 +3,12 @@ from PIL import ImageTk,Image
 import pymysql
 from tkinter import messagebox
 from AddUser import *
-from DeleteBook import *
-from SearchBook import *
-from UpdateBook import *
+from DeleteUser import *
 from showAllRecord import *
+
 # Add your own database name and password here to reflect in the code
 mypass = "S@nde780yepuri"
-mydatabase="libpos"
+mydatabase="CMS_db"
 
 con = pymysql.connect(host="localhost",user="root",password=mypass,database=mydatabase)
 cur = con.cursor()
@@ -54,7 +53,7 @@ def mainmenu():
     btn1 = Button(root, text="Add a new user ", bg='#AED6F1', fg='black', command=lambda: addUser(0))
     btn1.place(relx=0.28, rely=0.4, relwidth=0.45, relheight=0.1)
 
-    btn2 = Button(root, text="Delete a User", bg='#AED6F1', fg='black', command=delete)
+    btn2 = Button(root, text="Delete a User", bg='#AED6F1', fg='black', command=lambda: delete(0))
     btn2.place(relx=0.28, rely=0.5, relwidth=0.45, relheight=0.1)
     
 

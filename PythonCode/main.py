@@ -1,5 +1,4 @@
 from AdminPage import *
-from SearchBook import *
 from tkinter import *
 from PIL import ImageTk
 from tkinter import messagebox
@@ -8,10 +7,8 @@ from UserPage import *
 import pymysql
 # Add your own database name and password here to reflect in the code
 mypass = "S@nde780yepuri"
-mydatabase="libpos"
-print('before')
+mydatabase="CMS_db"
 con = pymysql.connect(host="localhost",user="root",password=mypass,database=mydatabase)
-print('after')
 cur = con.cursor()
 
 root = Tk()
@@ -25,7 +22,7 @@ def calladmin():
         messagebox.showinfo("Error", "All fields are required")
     else:
         try:
-            cur.execute("select * from user2 where user_name=%s and user_password=%s", (usern, passw))
+            cur.execute("select * from user where user_name=%s and user_password=%s and role_id = %s", (usern, passw,2))
             op = cur.fetchone()
             print(op[1])
             if op == None:
@@ -46,7 +43,7 @@ def callUser():
         messagebox.showinfo("Error", "All fields are required")
     else:
         try:
-            cur.execute("select * from user2 where user_name=%s and user_password=%s", (usern, passw))
+            cur.execute("select * from user where user_name=%s and user_password=%s", (usern, passw))
             op = cur.fetchone()
             # print(op)
             if op == None:

@@ -5,7 +5,7 @@ import pymysql
 
 # Add your own database name and password here to reflect in the code
 mypass = "S@nde780yepuri"
-mydatabase="libpos"
+mydatabase="CMS_db"
 
 con = pymysql.connect(host="localhost",user="root",password=mypass,database=mydatabase)
 cur = con.cursor()
@@ -13,29 +13,39 @@ cur = con.cursor()
 
 
 
-def deleteUser():
+def deleteUser(parentId):
 
     userName = userInfo.get()
-    getUserId = "select * from User1 where user_name = '%s'" % userName
-    deleteByUserName = "Delete from User2 where user_name = '%s'" % userName
+    getUserId = "select * from User where user_name = '%s'" % userName
+    print(getUserId)
+    deleteByUserName = "Delete from User where user_name = '%s'" % userName
     
 
     try:
         cur.execute(getUserId)
         result = cur.fetchone()
-        deleteJuntionTableRecords = "Delete from userContacts2 where parent_user_id = '%s'" % result[0]
-        cur.execute(deleteJuntionTableRecords)
-        cur.execute(deleteByUserName)
+        print(result)
+        print(parentId)
+        if parentId != 0:
+            print('Hello world')
+            deleteJuntionTableRecords = "Delete from userContacts where parent_user_id = '%s' and contact_user_id = '%s'"
+            val = (parentId,result[0])
+            print(deleteJuntionTableRecords)
+            cur.execute(deleteJuntionTableRecords,val)
+        else:
+            deleteJuntionTableRecords = "Delete from userContacts where parent_user_id = '%s'" % result[0]
+            print(deleteJuntionTableRecords)
+            cur.execute(deleteJuntionTableRecords)
+            cur.execute(deleteByUserName)
         con.commit()
         messagebox.showinfo("Information", "Record Deleted")
     except:
-        messagebox.showinfo("Please check Book ID")
+        messagebox.showinfo("Please check User ID")
 
-    print(deleteByUserName)
 
     root.destroy()
     
-def delete(): 
+def delete(parentId): 
     
     global userInfo,Canvas1,con,cur,root
     
@@ -67,7 +77,7 @@ def delete():
     userInfo.place(relx=0.3,rely=0.5, relwidth=0.62)
     
     #Submit Button
-    SubmitBtn = Button(root,text="Delete",bg='#d1ccc0', fg='black',command=deleteUser)
+    SubmitBtn = Button(root,text="Delete",bg='#d1ccc0', fg='black',command=lambda: deleteUser(parentId))
     SubmitBtn.place(relx=0.28,rely=0.9, relwidth=0.18,relheight=0.08)
     
     quitBtn = Button(root,text="Quit",bg='#f7f1e3', fg='black', command=root.destroy)

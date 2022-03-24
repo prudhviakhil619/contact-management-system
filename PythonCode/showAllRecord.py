@@ -6,7 +6,7 @@ import pymysql
 
 # Add your own database name and password here to reflect in the code
 mypass = "S@nde780yepuri"
-mydatabase = "libpos"
+mydatabase = "CMS_db"
 
 con = pymysql.connect(host="localhost", user="root", password=mypass, database=mydatabase)
 cur = con.cursor()
@@ -43,7 +43,7 @@ def showAll(userId):
             self.grid_columnconfigure(0, weight=1)
 
         def LoadTable(self):
-            Select = "select u.user_id, u.user_name, u.user_mobile, u.user_email, u.user_address, u.role_id from user2 u inner join userContacts2 uc1 on uc1.contact_user_id = u.user_id  where uc1.parent_user_id  = %s"
+            Select = "select u.user_id, u.user_name, u.user_mobile, u.user_email, u.user_address, u.role_id from user u inner join userContacts uc1 on uc1.contact_user_id = u.user_id  where uc1.parent_user_id  = %s"
             cur.execute(Select, userId)
             result = cur.fetchall()
             user_id = ""
