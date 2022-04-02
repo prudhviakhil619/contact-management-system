@@ -1,4 +1,4 @@
-#CSCI 603-C_Contact Management System Project
+*CSCI 603-C_Contact Management System Project
 
 This respository contains all the source codes for our Contact Management System. It contains various text and C files neccesary for the project to run and be designed.
 
